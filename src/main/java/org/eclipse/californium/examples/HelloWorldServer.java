@@ -49,7 +49,7 @@ public class HelloWorldServer extends CoapServer {
             	System.out.println(server.getEndpoints().get(i).getAddress());
             	System.out.println(server.getRoot().getName());
             }
-            server.setupObserve("helloObserve");//define um nome para ser observado 
+            server.setupObserve("Observe");//define um nome para ser observado 
             
             } catch (Exception e) {
             System.err.println("Falha ao iniciar o Servidor COAP: " + e.getMessage());

@@ -35,6 +35,7 @@ public class CoapObserve extends CoapResource {
 	ControlGpioExample controlGpioExample;
 	boolean ledOne = false;
 	boolean ledTwo = false;
+	TemperatureResource temperatureResource;
 
 	public CoapObserve(String name, HelloWorldServer server) {
 		super(name);
@@ -48,7 +49,8 @@ public class CoapObserve extends CoapResource {
 
 		this.server = server; //Seta o servidor já instanciado na Classe HelloWordServer.
 		this.resource = new HelloWorldResource(); // Inicializa o Classe Recurso.
-		this.server.add(new Resource[] { this.resource });// Adiciona o Recurso ao servidor Coap.
+		this.temperatureResource = new TemperatureResource();
+		this.server.add(new Resource[] { this.resource, this.temperatureResource });// Adiciona o Recursos ao servidor Coap.
 		this.controlGpioExample = new ControlGpioExample();// Instancia a classe da GPIO.
 	}
 	
@@ -193,7 +195,6 @@ public class CoapObserve extends CoapResource {
 				this.controlGpioExample.setup();
 			}
 			
-			
 			/*
 			 * Logica de verificar se a temperatura e humidade estão dentro do padrão 
 			 * inicial ou dentro do valores definidos pelo usuario, atraves do cliente Coap.
@@ -211,6 +212,8 @@ public class CoapObserve extends CoapResource {
 				changed();//notificar todos os observadores
 				this.ledTwo = true;
 			}
+			this.temperatureResource.setTemperatura(this.temp);
+			System.out.println(this.temperatureResource.getTemperatura());
 		}
 	}
 
