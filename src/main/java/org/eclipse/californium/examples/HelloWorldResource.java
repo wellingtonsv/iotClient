@@ -10,7 +10,7 @@ public class HelloWorldResource extends CoapResource {
 	public HelloWorldResource() {
 
 		// set resource identifier
-		super("helloWorld");
+		super("ResourceServer");
 
 		// set display name
 		getAttributes().setTitle("Hello-World Resource");

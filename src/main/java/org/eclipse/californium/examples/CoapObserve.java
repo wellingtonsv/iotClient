@@ -35,7 +35,8 @@ public class CoapObserve extends CoapResource {
 	ControlGpioExample controlGpioExample;
 	boolean ledOne = false;
 	boolean ledTwo = false;
-	TemperatureResource temperatureResource;
+	ResourceTemperature resourceTemperature;
+	ResourceHumidity resourceHumidity;
 
 	public CoapObserve(String name, HelloWorldServer server) {
 		super(name);
@@ -48,9 +49,11 @@ public class CoapObserve extends CoapResource {
 		timer.schedule(new UpdateTask(), 0L, 60000L);
 
 		this.server = server; //Seta o servidor já instanciado na Classe HelloWordServer.
-		this.resource = new HelloWorldResource(); // Inicializa o Classe Recurso.
-		this.temperatureResource = new TemperatureResource();
-		this.server.add(new Resource[] { this.resource, this.temperatureResource });// Adiciona o Recursos ao servidor Coap.
+		this.resource = new HelloWorldResource(); // Inicializa Recurso de resposta do servidor.
+		this.resourceTemperature = new ResourceTemperature(); //Inicializa o Recuso da temperatura.
+		this.resourceHumidity = new ResourceHumidity();//Inicializa o Recurso da Umidade.
+		// Adiciona o Recursos ao servidor Coap.
+		this.server.add(new Resource[] { this.resource, this.resourceTemperature, this.resourceHumidity });
 		this.controlGpioExample = new ControlGpioExample();// Instancia a classe da GPIO.
 	}
 	
@@ -212,8 +215,11 @@ public class CoapObserve extends CoapResource {
 				changed();//notificar todos os observadores
 				this.ledTwo = true;
 			}
-			this.temperatureResource.setTemperatura(this.temp);
-			System.out.println(this.temperatureResource.getTemperatura());
+			
+			this.resourceTemperature.setTemperatura(this.temp);
+			//System.out.println(this.resourceTemperature.getTemperatura());
+			this.resourceHumidity.setHumidade(this.humi);
+			//System.out.println(this.resourceHumidity.getHumidade());
 		}
 	}
 
