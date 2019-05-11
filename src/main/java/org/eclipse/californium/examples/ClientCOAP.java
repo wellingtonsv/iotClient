@@ -43,5 +43,4 @@ public class ClientCOAP {
 		CoapResponse coapRespOne = client.advanced(requestOne);
 		System.out.println(Utils.prettyPrint(coapRespOne));
 	}
-
 }
